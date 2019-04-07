@@ -50,7 +50,7 @@ func hasUpper(s string) bool {
 	}
 	for _, c := range s {
 		if unicode.IsUpper(c) {
-
+			return true
 		}
 	}
 	return false
@@ -59,11 +59,9 @@ func hasUpper(s string) bool {
 func match(query string, pattern string) bool {
 	if pattern == "" {
 		return !hasUpper(query)
-
 	}
 	if len(query) < len(pattern) {
 		return false
-
 	}
 	if query[0] == pattern[0] {
 		// possible special case
@@ -76,7 +74,6 @@ func match(query string, pattern string) bool {
 			return false
 		} else {
 			return match(query[1:], pattern)
-
 		}
 	}
 }
@@ -85,10 +82,8 @@ func camelMatch(queries []string, pattern string) []bool {
 	ret := make([]bool, len(queries))
 	for i, s := range queries {
 		ret[i] = match(s, pattern)
-
 	}
 	return ret
-
 }
 
 func main() {
