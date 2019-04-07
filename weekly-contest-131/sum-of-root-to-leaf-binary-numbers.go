@@ -79,9 +79,7 @@ func sumRootToLeaf(root *TreeNode) int {
 
 	var sum int64 = 0
 	for _, p := range paths {
-		if i, err := strconv.ParseInt(p, 2, 0); err != nil {
-
-		} else {
+		if i, err := strconv.ParseInt(p, 2, 0); err == nil {
 			sum += i
 		}
 	}
