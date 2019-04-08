@@ -55,15 +55,15 @@ func findLongestClipStartWith(clips [][]int, start int) []int {
 	s, e := start, start
 	for _, clip := range clips {
 		// find the longest clip which can link up with the previous clip
-		if clip[0] <= s && clip[1] > e {
-			e = clip[1]
+		clipStart, clipEnd := clip[0], clip[1]
+		if clipStart <= s && clipEnd > e {
+			e = clipEnd
 		}
 	}
 	if s != e {
 		return []int{s, e}
-	} else {
-		return []int{}
 	}
+	return nil
 }
 
 func videoStitching(clips [][]int, T int) int {
@@ -72,11 +72,12 @@ func videoStitching(clips [][]int, T int) int {
 	clip := []int{}
 	for {
 		clip = findLongestClipStartWith(clips, s)
-		if len(clip) == 2 {
-			s = clip[1]
+		if clip != nil {
+			end := clip[1]
+			s = end
 			filtered = append(filtered, clip)
 			// if last clip is found
-			if clip[1] >= T {
+			if end >= T {
 				break
 			}
 		} else {
