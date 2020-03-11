@@ -1,4 +1,4 @@
-package chapter01
+package chapter01_arrays_and_strings
 
 import (
 	"testing"

@@ -35,3 +35,7 @@
 ### Ch 1: Arrays and Strings
 
 Hashtables, ArrayList & Resizable Arrays, StringBuilder
+
+### Ch 2: Linked List
+
+The "Runner" Technique, Recursive Problems (O(n) space where n is depth of recursive)
