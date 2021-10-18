@@ -34,6 +34,9 @@ def _(s: bytes) -> bool:
         if (checker & (1 << val)) > 0:
             return False
         # mark the position as exist
+        # this is the same as operating a dict[int, bool] hashtable
+        # where the position represent the ascii code of the character
+        # and the bit represent whether it appears before
         checker = checker | (1 << val)
     return True
 

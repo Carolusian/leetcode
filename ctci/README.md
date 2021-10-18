@@ -32,6 +32,8 @@
 
 ## IX. Interview Questions
 
+Important chapters: 1-5, 7-10
+
 ### Ch 1: Arrays and Strings
 
 Hashtables, ArrayList & Resizable Arrays, StringBuilder
@@ -44,3 +46,4 @@ The "Runner" Technique, Recursive Problems (O(n) space where n is depth of recur
 
 Stack: useful in recursive algorithms
 
+### Ch 6: Math and Puzzles: NOT THAT Necessary
