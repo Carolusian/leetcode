@@ -1,7 +1,7 @@
 # given two strings, write a method to decide if one is a permutation of the other
 
 import unittest
-from collections import defaultdict
+from collections import Counter
 from itertools import permutations
 
 
@@ -21,6 +21,9 @@ class Test(unittest.TestCase):
             s2 = "".join(p)
             self.assertTrue(check_perm(s1, s2))
 
+        s1, s2 = "hello", "ooleh"
+        self.assertFalse(check_perm(s1, s2))
+
 
 def check_perm(s1: str, s2: str) -> bool:
     # a string is a permutation of itself
@@ -30,13 +33,16 @@ def check_perm(s1: str, s2: str) -> bool:
     if len(s1) != len(s2): 
         return False
 
-    check = defaultdict(bool)
-    for c in s1:
-        check[c] = True
+    ctr1 = Counter(s1)
+    ctr2 = Counter(s2)
 
-    for c in s2:
-        if not check[c]:
-            return False
+    all_chars = set(s1) | set(s2)
+    try:
+        for c in all_chars:
+            if ctr1[c] != ctr2[c]:
+                return False
+    except:
+        return False
     return True
 
 if __name__ == "__main__":
