@@ -21,13 +21,12 @@
 # - divide and conquer
 # - the top/last case is edit the last character, then recurse the same on substrings
 # - the minimum case is compare to empty string
-# - Big O is exponential O(3^m)
+# - Big O is exponential O(3^m): think the generated scenarios as binary tree for O(2^n)
 
 import unittest
 
 
-
-def one_away(s1: str, s2: str) -> str:
+def one_away(s1: str, s2: str) -> bool:
     len1, len2 = len(s1), len(s2)
     i, j, edits = 0, 0, 0
 
@@ -35,7 +34,7 @@ def one_away(s1: str, s2: str) -> str:
         return False
 
     while i < len1 and j < len2:
-        if s1[i] == s2[j]: 
+        if s1[i] == s2[j]:
             i = i + 1
             j = j + 1
         else:
@@ -50,15 +49,35 @@ def one_away(s1: str, s2: str) -> str:
         if edits > 1:
             return False
     return True
-        
-        
-def min_distance(s1: str, s2: str) -> str:
+
+
+def min_distance(s1: str, s2: str) -> int:
     # recursion approach to calculate the real edit distances from s1 to s2
     # this algorithm will be more general than the one_away function
-    # cost: O(3^m)
+    # cost: O(3^m) - cannot pass leetcode submission
     len1, len2 = len(s1), len(s2)
-    pass
+    if s1 == s2:
+        return 0
+    if s1 == "":
+        return len2
+    if s2 == "":
+        return len1
 
+    # consider only edit and delete by swap two variables
+    if len1 < len2:
+        s1, s2 = s2, s1
+
+    dist = 0 if s1[0] == s2[0] else 1
+
+    # minimum of edited, or deleted s1
+    return dist + min(min_distance(s1[1:], s2[1:]), min_distance(s1[1:], s2))
+
+
+def one_away_recursive(s1: str, s2: str) -> bool:
+    return min_distance(s1, s2) <= 1
+
+
+# TODO: DP solution which could be more efficient
 
 
 class Test(unittest.TestCase):
@@ -69,7 +88,7 @@ class Test(unittest.TestCase):
             ("pale", "bake", False),
             ("pale", "pale12", False),
     )
-    test_funcs = (one_away, min_distance)
+    test_funcs = (one_away, one_away_recursive)
 
     def test_one_away(self):
         for test_case in self.test_cases:
@@ -79,5 +98,5 @@ class Test(unittest.TestCase):
 
 
 if __name__ == "__main__":
+    # print(min_distance("pale", "pale12"))
     unittest.main()
-

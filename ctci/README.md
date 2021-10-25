@@ -47,3 +47,7 @@ The "Runner" Technique, Recursive Problems (O(n) space where n is depth of recur
 Stack: useful in recursive algorithms
 
 ### Ch 6: Math and Puzzles: NOT THAT Necessary
+
+## Related leetcode questions
+
+- https://leetcode.com/discuss/general-discussion/1152824/cracking-the-coding-interview-6th-edition-in-leetcode
