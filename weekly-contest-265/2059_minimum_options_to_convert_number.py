@@ -72,6 +72,7 @@
 # A typical BFS search problem: https://leetcode.com/contest/weekly-contest-265/problems/minimum-operations-to-convert-number/
 # keywords: minimum number of operations from one state to another state, normally can use a tuple, or class Node to store the current level
 # sample: https://www.geeksforgeeks.org/minimum-number-operation-required-convert-number-x-y/
+# Fast BFS solution: https://leetcode.com/problems/minimum-operations-to-convert-number/discuss/1550126/Python3-Fast-BFS-(~100-200-ms)
 
 
 import collections

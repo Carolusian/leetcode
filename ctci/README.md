@@ -46,6 +46,12 @@ The "Runner" Technique, Recursive Problems (O(n) space where n is depth of recur
 
 Stack: useful in recursive algorithms
 
+### Ch 4: Trees and Graphs
+
+- BFS:
+  - typical scenario: find the minimum steps to transform from one state to another
+  - example: https://leetcode.com/contest/weekly-contest-265/problems/minimum-operations-to-convert-number/
+
 ### Ch 6: Math and Puzzles: NOT THAT Necessary
 
 ## Related leetcode questions
