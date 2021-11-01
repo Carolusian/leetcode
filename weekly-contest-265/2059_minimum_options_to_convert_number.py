@@ -117,11 +117,47 @@ class Solution:
             seen.add(item.val)
         return -1
 
+    def minimumOperationsPruneBeforeHand(self, nums: List[int], start: int, goal: int) -> int:
+        from operator import add, sub, xor
+        pruned = []
+        for n in nums:
+            for op in (add, sub, xor):
+                x = op(goal, n)
+                if (x >= 0 and x <= 1000):
+                    pruned.append(n)
+        
+        # BFS search problem
+        # numbers visited, so that we don't retry on this numbers
+        seen = set()
+        q = collections.deque([Node(start, 0)])
+
+        while q:
+            item = q.popleft()
+
+            if item.val == goal:
+                print(item.level)
+                return item.level
+
+            if item.val in seen:
+                continue
+
+            if item.val < 0 or item.val > 1000:
+                continue
+
+            # if can reach the goal in one more step
+            for n in nums:
+                q.append(Node(item.val + n, item.level + 1))
+                q.append(Node(item.val - n, item.level + 1))
+                q.append(Node(item.val ^ n, item.level + 1))
+
+            seen.add(item.val)
+        return -1
+
 
 solution = Solution()
 solution.minimumOperations([1, 3], 6, 4)
 solution.minimumOperations([2, 8, 16], 0, 1)
-solution.minimumOperations(
+solution.minimumOperationsPruneBeforeHand(
     [
         274504599,
         -437121852,
