@@ -28,6 +28,13 @@ class LinkedList(Generic[T]):
             yield it
             it = it.next
 
+    def __str__(self):
+        l = [it.val for it in self.__iter__()]
+        return str(l)
+
+    def to_list(self):
+        return [it.val for it in self.__iter__()]
+
     @classmethod
     def from_list(cls, lst: Sequence[T]):
         ll = cls()
@@ -47,6 +54,7 @@ class Test(unittest.TestCase):
         ll = LinkedList.from_list([1, 2, 3])
         res = [node.val for node in ll if node]
         self.assertEqual(res, [1, 2, 3])
+        self.assertEqual(ll.to_list(), [1, 2, 3])
 
 
 if __name__ == "__main__":
