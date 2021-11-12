@@ -21,6 +21,9 @@ class LinkedList(Generic[T]):
     """A linked list in essence is just the head node"""
 
     head: Optional[ListNode[T]]
+    
+    def __init__(self, head: Optional[ListNode[T]] = None):
+        self.head = head
 
     def __iter__(self) -> Iterable[ListNode[T]]:
         it = self.head
