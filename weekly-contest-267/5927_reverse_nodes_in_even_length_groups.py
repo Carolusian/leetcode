@@ -1,3 +1,8 @@
+# Solution: https://leetcode.com/problems/reverse-nodes-in-even-length-groups/discuss/1577032/Python-Reverse-Linked-List-O(1)-Space
+
+# keywords: reverse linked list, bitwise even/odd number, inplace reverse
+# core snippets: `n & 1`, `node.next, node, rev = rev, node.next, node`
+
 # 5927. Reverse Nodes in Even Length Groups
 # User Accepted:1495
 # User Tried:1968
