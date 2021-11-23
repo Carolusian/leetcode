@@ -28,10 +28,14 @@ test_cases = (
     ([9, 9, 9, 9, 9, 9, 9], [9, 9, 9, 9], [8, 9, 9, 9, 0, 0, 0, 1]),
 )
 
+test_cases_forword_order = (
+    ([6, 1, 7], [2, 9, 5], [9, 1, 2]),
+    ([0], [0], [0]),
+    ([9, 9, 9, 9, 9, 9, 9], [9, 9, 9, 9], [1, 0, 0, 0, 9, 9, 9, 8]),
+)
 
-def sum_list(
-    l1: Optional[ListNode[int]], l2: Optional[ListNode[int]]
-) -> Optional[ListNode[int]]:
+
+def sum_list(l1: Optional[ListNode[int]], l2: Optional[ListNode[int]]) -> Optional[ListNode[int]]:
     n1, n2, carry = l1, l2, 0
     head, runner = None, None
     while n1 or n2 or carry:
@@ -57,7 +61,47 @@ def sum_list(
     return head
 
 
-# TODO solve the same problem in forward order
+# Alternated problem: solve the same problem in forward order
+def sum_list_forward_order(
+    l1: Optional[ListNode[int]], l2: Optional[ListNode[int]]
+) -> Optional[ListNode[int]]:
+    # NOTES:
+    # for forward order list, need to padding zero to the shorter list
+    # sum the next node firsts,
+    # then sum the current nodes with the carry from the sum of the sum of the next nodes
+    def pad_zero(l: ListNode[int], n: int):
+        head = l
+        for _ in range(n):
+            node = ListNode(0)
+            node.next = head
+            head = node
+        return head
+
+    def partial_sum(ln1: Optional[ListNode[int]], ln2: Optional[ListNode[int]]):
+        # the length of ln1 and ln2 is equal now
+        n1, n2, carry, next_sum_node = ln1, ln2, 0, None
+        if n1.next and n2.next:
+            next_sum_node, carry = partial_sum(n1.next, n2.next)
+
+        total = carry + n1.val + n2.val
+        carry = total // 10
+        sum = total % 10
+        sum_node = ListNode(sum)
+        sum_node.next = next_sum_node
+        return sum_node, carry
+
+    if len(l1) <= len(l2):
+        l1 = pad_zero(l1, len(l2) - len(l1))
+    else:
+        l2 = pad_zero(l2, len(l1) - len(l2))
+
+    res, carry = partial_sum(l1, l2)
+    if carry > 0:
+        head = ListNode(carry)
+        head.next = res
+        return head
+
+    return res
 
 
 class Test(unittest.TestCase):
@@ -72,6 +116,19 @@ class Test(unittest.TestCase):
                 ll.head = res
                 self.assertEqual(ll.to_list(), expect)
 
+        for tc in test_cases_forword_order:
+            l1 = LinkedList.from_list(tc[0])
+            l2 = LinkedList.from_list(tc[1])
+            expect = tc[2]
+            res = sum_list_forward_order(l1.head, l2.head)
+            if res:
+                ll = LinkedList()
+                ll.head = res
+                self.assertEqual(ll.to_list(), expect)
+
 
 if __name__ == "__main__":
     unittest.main()
+    # ll1 = LinkedList.from_list([1, 2])
+    # ll2 = LinkedList.from_list([2, 3, 4])
+    # sum_list_forward_order(ll1.head, ll2.head)

@@ -16,12 +16,20 @@ class ListNode(Generic[T]):
     def __str__(self) -> str:
         return str(self.val)
 
+    def __len__(self) -> int:
+        length = 1
+        runner = self.next
+        while runner:
+            length += 1
+            runner = runner.next
+        return length
+
 
 class LinkedList(Generic[T]):
     """A linked list in essence is just the head node"""
 
     head: Optional[ListNode[T]]
-    
+
     def __init__(self, head: Optional[ListNode[T]] = None):
         self.head = head
 
@@ -58,6 +66,7 @@ class Test(unittest.TestCase):
         res = [node.val for node in ll if node]
         self.assertEqual(res, [1, 2, 3])
         self.assertEqual(ll.to_list(), [1, 2, 3])
+        self.assertEqual(len(ll), 3)
 
 
 if __name__ == "__main__":
