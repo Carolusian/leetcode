@@ -1,8 +1,8 @@
 # 2.6 Palindrome: Implement a function to check if a linked list is a palindrome.
-# Keywords: palindrome, reverse, recursion, recursive, reverse half
+# Keywords: palindrome, reverse, recursion, recursive before base case, reverse half
 # Solution 1: use a array, then compare array and reversed array
 
-# Solution 2: compare recursively
+# Solution 2: compare recursively, if base case if after recursion, then it is proceeded in reverse order
 
 # Solution 3: reverse the second half, then compare the value of two pointer
 
@@ -12,8 +12,24 @@ from linked_list import ListNode, LinkedList
 from typing import Optional
 
 
-def is_palindrome_recursive(head: Optional[ListNode]) -> bool:
-    return True
+class Solution:
+    def is_palindrome_recursive(self, head: Optional[ListNode]) -> bool:
+        if not head:
+            return False
+
+        self.ptr = head
+
+        def reverse_check(node: Optional[ListNode]):
+            global ptr
+            if node and not reverse_check(node.next):
+                return False
+            if node and self.ptr.val != node.val:
+                return False
+            if node and self.ptr.val == node.val:
+                self.ptr = self.ptr.next
+            return True
+
+        return reverse_check(self.ptr)
 
 
 def is_palindrome_2nd_half_reverse(head: Optional[ListNode]) -> bool:
@@ -26,7 +42,7 @@ def is_palindrome_2nd_half_reverse(head: Optional[ListNode]) -> bool:
         while cur:
             prev, cur.next, cur = cur, prev, cur.next
         return prev
-    
+
     if not head:
         return False
 
@@ -35,10 +51,10 @@ def is_palindrome_2nd_half_reverse(head: Optional[ListNode]) -> bool:
     prev, runner = None, head
     while runner and half:
         prev, runner, half = runner, runner.next, half - 1
-    
+
     # connect to the second half
     prev.next = reverse_linkedlist(runner)
-    
+
     # compare
     p1, p2, n = head, prev.next, len(head) // 2
     while n:
@@ -49,8 +65,9 @@ def is_palindrome_2nd_half_reverse(head: Optional[ListNode]) -> bool:
     return True
 
 
+sol = Solution()
 test_cases = (([1, 2, 2, 1], True), ([1, 2], False))
-test_funcs = (is_palindrome_recursive, is_palindrome_2nd_half_reverse)
+test_funcs = (sol.is_palindrome_recursive, is_palindrome_2nd_half_reverse)
 
 
 class Test(unittest.TestCase):
