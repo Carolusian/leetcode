@@ -68,7 +68,7 @@ class Tree(Generic[T]):
     @classmethod
     def from_list(cls, l: List[T]) -> "Tree[T]":
         """
-        we can build the tree recursively base the following attributes of a binary tree
+        we can build the tree recursively base on the following attributes of a binary tree
         - the length is 2**n - 1
         - support parent index is i
         - the left child index is: 2 * i + 1

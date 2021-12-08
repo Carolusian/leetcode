@@ -57,3 +57,4 @@ Stack: useful in recursive algorithms
 ## Related leetcode questions
 
 - https://leetcode.com/discuss/general-discussion/1152824/cracking-the-coding-interview-6th-edition-in-leetcode
+- good dp question: https://leetcode.com/problems/network-delay-time/discuss/1614297/python-3-different-4-methods-no-explanation
