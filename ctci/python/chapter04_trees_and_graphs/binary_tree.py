@@ -5,11 +5,11 @@ root = [3,9,20,null,null,15,7]
 [[3],[9,20],[15,7]]
 
 
-   3
-  / \
- 9   20
-     / \
-    15  7
+      3
+    /  \
+   9    20
+        / \
+        15  7
 According to abrove, it is constructed in BFS order
 """
 
@@ -20,8 +20,10 @@ from typing import List, Optional, TypeVar, Generic
 
 T = TypeVar("T")
 
+
 class TreeNode(Generic[T]):
     """define a binary tree node"""
+
     val: T
     left: "Optional[TreeNode[T]]"
     right: "Optional[TreeNode[T]]"
@@ -30,6 +32,74 @@ class TreeNode(Generic[T]):
         self.val = val
         self.left = None
         self.right = None
+
+    @property
+    def height(self):
+        d = collections.Counter()
+
+        def fn(node, level):
+            if node:
+                if node.val:
+                    d[level] += 1
+                if node.left:
+                    fn(node.left, level + 1)
+                if node.right:
+                    fn(node.right, level + 1)
+
+        fn(self, 0)
+        keys = d.keys()
+        if keys:
+            return max(keys)
+        else:
+            return -1
+
+    def __str__(self):
+        h = self.height
+
+        """
+        # the bottom layer, we set every node to have 2 spaces in-between,
+        n_bottom = 2 ** h - 1 - (2 ** (h - 1) - 1)
+        # the length of bottom line to be printed
+        bottom_line = n_bottom * 2 - (n_bottom - 1) * 1
+        """
+
+        # get the nodes for each layer
+        d = collections.defaultdict(list)
+
+        def fn(node, level):
+            if node.val:
+                d[level].append(node.val)
+            else:
+                d[level].append(None)    # if no value, we still need placeholder for display
+
+            if node.left:
+                fn(node.left, level + 1)
+
+            if node.right:
+                fn(node.right, level + 1)
+
+        fn(self, 0)
+
+        # get a formatted string bottom up
+        bottom_up = reversed(d.values())
+        lines = []
+        n = 1
+        for values in bottom_up:
+            line = ""
+            for val in values:
+                if not val: line += "{0:>2}".format("")
+                else: line += "{0:>2}".format(val)
+                # space in-between
+                line += " " * 2 * n 
+
+            # prepend
+            if n > 1:
+                line = " " * 2 * n + line
+            lines.append(line)
+            n += 1
+
+        # reverse to top-down and return
+        return "\n".join(reversed(lines))
 
 
 class Tree(Generic[T]):
@@ -42,7 +112,7 @@ class Tree(Generic[T]):
     @classmethod
     def from_list_bfs(cls, l: List[T]) -> "Tree[T]":
         """the length of binary tree nodes: 2**n - 1, construct the tree in BFS order
-        
+
         solution:
           two-pointer: keep track the parent node with queue, and the leaves with iterator
         """
@@ -74,6 +144,7 @@ class Tree(Generic[T]):
         - the left child index is: 2 * i + 1
         - the right child index is: 2 * i + 2
         """
+
         def fn(index: int) -> TreeNode[T]:
             parent = TreeNode(l[index])
             l_index, r_index = 2 * index + 1, 2 * index + 2
@@ -84,11 +155,9 @@ class Tree(Generic[T]):
                 parent.right = fn(r_index)
             return parent
 
-
         tree = cls()
         tree.root = fn(0)
         return tree
-
 
     def to_list(self) -> List[T]:
         """get the values of a binary tree in BFS order"""
@@ -100,24 +169,42 @@ class Tree(Generic[T]):
                 ret.append(parent.val)
 
             if parent and parent.left:
-                queue.append(parent.left) 
+                queue.append(parent.left)
 
             if parent and parent.right:
-                queue.append(parent.right) 
+                queue.append(parent.right)
         return ret
 
 
 class Test(unittest.TestCase):
+    def setUp(self):
+        self.tree_vals = [3, 9, 20, None, None, 15, 7]
+
     def test_from_list(self):
-        tree_vals = [3, 9, 20, None, None, 15, 7]
+        tree = Tree.from_list_bfs(self.tree_vals)
+        self.assertEqual(tree.to_list(), self.tree_vals)
 
+        tree = Tree.from_list(self.tree_vals)
+        self.assertEqual(tree.to_list(), [n for n in self.tree_vals if n])
+
+    def test_tree_height(self):
+        tree = Tree.from_list_bfs(self.tree_vals)
+
+        if tree.root:
+            self.assertEqual(tree.root.height, 2)
+
+    def test_print_tree(self):
+        r"""
+                  3
+                /  \
+               9    20
+              / \   / \
+            12  81  15  7
+        """
+        tree_vals = [3, 9, 20, 12, 81, 15, 7]
         tree = Tree.from_list_bfs(tree_vals)
-        self.assertEqual(tree.to_list(), tree_vals)
+        print(tree.root)
 
-        tree = Tree.from_list(tree_vals)
-        self.assertEqual(tree.to_list(), [n for n in tree_vals if n])
-        
 
 if __name__ == "__main__":
     unittest.main()
-   
