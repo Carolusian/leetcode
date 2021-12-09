@@ -2,6 +2,9 @@
 # at each depth (e.g., if you have a tree with depth D, you'll have D linked lists).
 # Hints: #107, #123, #135
 
+# Keywords: traversal, tree height
+# Solution: if the level has nodes, add it the counter of that level
+
 import collections
 import unittest
 from binary_tree import TreeNode, Tree

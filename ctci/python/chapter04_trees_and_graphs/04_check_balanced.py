@@ -3,33 +3,32 @@
 # node never differ by more than one.
 # Hints:#27, #33, #49, #705, #724
 
+# Keywords: tree height, recursion
+# Solution: if the height of the left and right subtrees not equal, then, not balanced. repeat for all child nodes
+
 import unittest
 from typing import Optional
 from binary_tree import TreeNode, Tree
 
+
 def check_balanced(root: Optional[TreeNode]) -> bool:
-    if not root: return True
+    if not root:
+        return True
 
     l_height = 0 if not root.left else root.left.height
     r_height = 0 if not root.right else root.right.height
 
-    print(l_height, r_height)
     if abs(l_height - r_height) > 1:
         return False
 
-    l_check = check_balanced(root.left)
-    r_check = check_balanced(root.right)
-    if l_check and r_check:
-        return True
-    else: 
-        return False
+    return check_balanced(root.left) and check_balanced(root.right)
 
 
 test_cases = (
     ([3, 9, 20, None, None, 15, 7], True),
     ([1, 2, 2, 3, 3, None, None, 4, 4], False),
     ([], True),
-    ([1, None, 2, None, None, 3], False)
+    ([1, None, 2, None, None, 3], False),
 )
 
 
