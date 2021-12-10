@@ -39,7 +39,7 @@ class TreeNode(Generic[T]):
 
         def fn(node, level):
             if node:
-                if node.val:
+                if node.val is not None:
                     d[level] += 1
                 if node.left:
                     fn(node.left, level + 1)
@@ -67,7 +67,7 @@ class TreeNode(Generic[T]):
         d = collections.defaultdict(list)
 
         def fn(node, level):
-            if node.val:
+            if node.val is not None:
                 d[level].append(node.val)
             else:
                 d[level].append(None)    # if no value, we still need placeholder for display
@@ -87,7 +87,7 @@ class TreeNode(Generic[T]):
         for values in bottom_up:
             line = ""
             for val in values:
-                if not val: line += "{0:>2}".format("")
+                if val is None: line += "{0:>2}".format("")
                 else: line += "{0:>2}".format(val)
                 # space in-between
                 line += " " * 2 * n 
@@ -148,10 +148,10 @@ class Tree(Generic[T]):
         def fn(index: int) -> TreeNode[T]:
             parent = TreeNode(l[index])
             l_index, r_index = 2 * index + 1, 2 * index + 2
-            if l_index < len(l) and l[l_index]:
+            if l_index < len(l) and l[l_index] is not None:
                 parent.left = fn(l_index)
 
-            if r_index < len(l) and l[r_index]:
+            if r_index < len(l) and l[r_index] is not None:
                 parent.right = fn(r_index)
             return parent
 
@@ -202,6 +202,10 @@ class Test(unittest.TestCase):
             12  81  15  7
         """
         tree_vals = [3, 9, 20, 12, 81, 15, 7]
+        tree = Tree.from_list_bfs(tree_vals)
+        print(tree.root)
+
+        tree_vals = [0, None, -1]
         tree = Tree.from_list_bfs(tree_vals)
         print(tree.root)
 
