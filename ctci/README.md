@@ -46,6 +46,11 @@ The "Runner" Technique, Recursive Problems (O(n) space where n is depth of recur
 
 Stack: useful in recursive algorithms
 
+#### Good stack problems on leetcode
+
+- [Good stack problems by lee215](https://leetcode.com/problems/online-stock-span/discuss/168311/)
+- [Sum of subarray minimums](https://leetcode.com/problems/sum-of-subarray-minimums/discuss/170750/)
+
 ### Ch 4: Trees and Graphs
 
 - BFS:
