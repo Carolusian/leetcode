@@ -27,11 +27,13 @@ class TreeNode(Generic[T]):
     val: T
     left: "Optional[TreeNode[T]]"
     right: "Optional[TreeNode[T]]"
+    parent: "Optional[TreeNode[T]]"
 
-    def __init__(self, val: T):
+    def __init__(self, val: T, left=None, right=None, parent=None):
         self.val = val
-        self.left = None
-        self.right = None
+        self.left = left
+        self.right = right
+        self.parent = parent
 
     @property
     def height(self):
@@ -70,7 +72,9 @@ class TreeNode(Generic[T]):
             if node.val is not None:
                 d[level].append(node.val)
             else:
-                d[level].append(None)    # if no value, we still need placeholder for display
+                d[level].append(
+                    None
+                )  # if no value, we still need placeholder for display
 
             if node.left:
                 fn(node.left, level + 1)
@@ -87,10 +91,12 @@ class TreeNode(Generic[T]):
         for values in bottom_up:
             line = ""
             for val in values:
-                if val is None: line += "{0:>2}".format("")
-                else: line += "{0:>2}".format(val)
+                if val is None:
+                    line += "{0:>2}".format("")
+                else:
+                    line += "{0:>2}".format(val)
                 # space in-between
-                line += " " * 2 * n 
+                line += " " * 2 * n
 
             # prepend
             if n > 1:
@@ -159,6 +165,28 @@ class Tree(Generic[T]):
         tree.root = fn(0)
         return tree
 
+    @classmethod
+    def from_list_parent(cls, l: List[T]) -> "Tree[T]":
+        """similar to from_list_bfs, but also set parent for childrens"""
+        if not l:
+            return cls()
+
+        it = iter(l)
+        root = TreeNode(next(it))
+        queue = collections.deque([root])
+        while True:
+            parent = queue.popleft()
+            try:
+                parent.left = TreeNode(next(it), parent=parent)
+                parent.right = TreeNode(next(it), parent=parent)
+                queue.extend([parent.left, parent.right])
+            except StopIteration:
+                break
+
+        tree = cls()
+        tree.root = root
+        return tree
+
     def to_list(self) -> List[T]:
         """get the values of a binary tree in BFS order"""
         ret = []
@@ -186,6 +214,17 @@ class Test(unittest.TestCase):
 
         tree = Tree.from_list(self.tree_vals)
         self.assertEqual(tree.to_list(), [n for n in self.tree_vals if n])
+
+    def test_from_list_parent(self):
+        tree = Tree.from_list_parent(self.tree_vals)
+        self.assertEqual(tree.to_list(), self.tree_vals)
+
+        root = tree.root
+
+        if root and root.left:
+            self.assertEqual(root.left.parent.val, 3)
+        if root and root.right:
+            self.assertEqual(root.right.parent.val, 3)
 
     def test_tree_height(self):
         tree = Tree.from_list_bfs(self.tree_vals)
