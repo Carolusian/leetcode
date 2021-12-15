@@ -64,7 +64,70 @@ def build_order(nums: List[str], dependencies: List[List[str]]) -> List[str]:
 
     return ret
 
-# TODO: solve with topological sort
+
+# solve with topological sort
+# method 1: DFS + queue: https://www.geeksforgeeks.org/topological-sorting/
+# See also: 07_Topological-Sorting.png
+"""core implementation
+
+if v in graphp[vertex]:
+    topo_sort(v, graph)
+if not seen[vertex]:
+    stack.append(vertex)
+    seen[vertex] = True
+"""
+
+
+def build_order_topologic_sort(
+    nums: List[str], dependencies: List[List[str]]
+) -> List[str]:
+    # seen has 3 states: 0, 1, 2
+    # 1 represent inprogress
+    # 3 states can be used to check circularity
+    graph, seen = collections.defaultdict(list), collections.defaultdict(int)
+    stack, n = [], len(nums)
+
+    # build graph
+    """
+    'a': ['d'], 
+    'f': ['b', 'a'], 
+    'b': ['d'], 
+    'd': ['c']
+    """
+    for dep in dependencies:
+        prereq, dependent = dep
+        graph[prereq].append(dependent)
+
+    """recursive function for topological sort
+    :return: if continue or not, do not continue is cirularity is detected
+    """
+
+    def topo_sort(vertex: str, graph) -> bool:
+        # check circular
+        if seen[vertex] == 1:
+            return False
+
+        if not seen[vertex]:        # only change 0: not visited to 1: inprogress
+            seen[vertex] = 1
+
+        # recursive implementation on topo_sort
+        for v in graph[vertex]:
+            if not topo_sort(v, graph):
+                return False
+
+        if seen[vertex] != 2:
+            stack.append(vertex)
+            seen[vertex] = 2
+        return True
+
+    for vertex in nums:
+        if not topo_sort(vertex, graph):
+            return []
+
+    return stack[::-1]
+
+
+# method 2: kahn: https://www.geeksforgeeks.org/topological-sorting-indegree-based-solution/
 
 
 class Test(unittest.TestCase):
@@ -72,6 +135,7 @@ class Test(unittest.TestCase):
         nums = ["a", "b", "c", "d", "e", "f"]
         dependencies = [["a", "d"], ["f", "b"], ["b", "d"], ["f", "a"], ["d", "c"]]
         self.assertEqual(len(build_order(nums, dependencies)), len(nums))
+        self.assertEqual(len(build_order_topologic_sort(nums, dependencies)), len(nums))
 
         # circular
         nums = ["a", "b", "c", "d", "e", "f"]
@@ -84,6 +148,7 @@ class Test(unittest.TestCase):
             ["d", "a"],
         ]
         self.assertEqual(build_order(nums, dependencies), [])
+        self.assertEqual(build_order_topologic_sort(nums, dependencies), [])
 
 
 if __name__ == "__main__":
