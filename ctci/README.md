@@ -59,7 +59,7 @@ Stack: useful in recursive algorithms
 - DFS: implemented in recursion
 - Topogical sort:
   - method 1: DFS + stack, stack is for cache and reverse the return, 3 status to detect circular
-  - method 2: queueu, kahn's algorithms with
+  - method 2: queueu, kahn's algorithm
 
 ### Ch 6: Math and Puzzles: NOT THAT Necessary
 

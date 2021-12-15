@@ -66,7 +66,7 @@ def build_order(nums: List[str], dependencies: List[List[str]]) -> List[str]:
 
 
 # solve with topological sort
-# method 1: DFS + queue: https://www.geeksforgeeks.org/topological-sorting/
+# method 1: DFS + stack: https://www.geeksforgeeks.org/topological-sorting/
 # See also: 07_Topological-Sorting.png
 """core implementation
 
