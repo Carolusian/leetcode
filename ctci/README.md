@@ -67,3 +67,8 @@ Stack: useful in recursive algorithms
 
 - https://leetcode.com/discuss/general-discussion/1152824/cracking-the-coding-interview-6th-edition-in-leetcode
 - good dp question: https://leetcode.com/problems/network-delay-time/discuss/1614297/python-3-different-4-methods-no-explanation
+
+## Tips
+
+- Counter can be used to record number of operations, rather than really perform the operation, e.g. remove an element from container
+- Dict can be used to record status, e.g. true|false; pending|inprogres|done

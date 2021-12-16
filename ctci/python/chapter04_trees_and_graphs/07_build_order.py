@@ -107,7 +107,7 @@ def build_order_topologic_sort(
         if seen[vertex] == 1:
             return False
 
-        if not seen[vertex]:        # only change 0: not visited to 1: inprogress
+        if not seen[vertex]:  # only change 0: not visited to 1: inprogress
             seen[vertex] = 1
 
         # recursive implementation on topo_sort
@@ -128,6 +128,56 @@ def build_order_topologic_sort(
 
 
 # method 2: kahn: https://www.geeksforgeeks.org/topological-sorting-indegree-based-solution/
+"""core implementation
+
+init:
+for vertex in nums:
+    if indegree count is 0:
+        queue.append(vertex)
+
+kahn's togological sort, when elements in queue:
+pop queue
+for v in out degree graph:
+    indegree[v] -= 1
+    if indegree[v] == 0 then append to queue
+"""
+
+
+def build_order_kahn(nums: List[str], dependencies: List[List[str]]) -> List[str]:
+    # outdegree graph and indegree counter for each vertex as separate nodes
+
+    # indegree graph is not necessary,
+    # as we only need to init the queue which can be done by indegree counter
+    ograph, icnt = (
+        collections.defaultdict(list),
+        collections.Counter(),
+    )
+    q, ret = collections.deque([]), []
+
+    for dep in dependencies:
+        prereq, dependent = dep
+        ograph[prereq].append(dependent)
+
+        # for indegree graph, we only count the indegree or the dependent vertex
+        icnt[dependent] += 1
+
+    # init: start with 0-indegress vertices
+    for vertex in nums:
+        if not icnt[vertex]:
+            q.append(vertex)
+
+    # this part quite like BFS
+    while q:
+        vertex = q.popleft()
+        ret.append(vertex)
+
+        for v in ograph[vertex]:
+            icnt[v] -= 1
+            if icnt[v] == 0:
+                q.append(v)
+
+    if len(ret) != len(nums): return []
+    return ret
 
 
 class Test(unittest.TestCase):
@@ -136,6 +186,7 @@ class Test(unittest.TestCase):
         dependencies = [["a", "d"], ["f", "b"], ["b", "d"], ["f", "a"], ["d", "c"]]
         self.assertEqual(len(build_order(nums, dependencies)), len(nums))
         self.assertEqual(len(build_order_topologic_sort(nums, dependencies)), len(nums))
+        self.assertEqual(len(build_order_kahn(nums, dependencies)), len(nums))
 
         # circular
         nums = ["a", "b", "c", "d", "e", "f"]
@@ -149,6 +200,7 @@ class Test(unittest.TestCase):
         ]
         self.assertEqual(build_order(nums, dependencies), [])
         self.assertEqual(build_order_topologic_sort(nums, dependencies), [])
+        self.assertEqual(build_order_kahn(nums, dependencies), [])
 
 
 if __name__ == "__main__":
