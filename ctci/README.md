@@ -60,6 +60,7 @@ Stack: useful in recursive algorithms
 - Topogical sort:
   - method 1: DFS + stack, stack is for cache and reverse the return, 3 status to detect circular
   - method 2: queueu, kahn's algorithm
+- Weaving: path, traversal represented in two arrays, together with recursion
 
 ### Ch 6: Math and Puzzles: NOT THAT Necessary
 
@@ -72,3 +73,5 @@ Stack: useful in recursive algorithms
 
 - Counter can be used to record number of operations, rather than really perform the operation, e.g. remove an element from container
 - Dict can be used to record status, e.g. true|false; pending|inprogres|done
+- Trust and focus in divide and conquer
+- 类代码模似: something between code and paper-pen walk through

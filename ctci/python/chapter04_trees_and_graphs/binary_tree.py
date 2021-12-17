@@ -109,11 +109,26 @@ class TreeNode(Generic[T]):
 
 
 class Tree(Generic[T]):
+    root: Optional[TreeNode]
+
     def __init__(self):
         self.root = None
 
     def insert(self, val, node: Optional[TreeNode[T]] = None):
         pass
+
+    def insert_bst(self, val):
+        assert self.root is not None
+        
+        def fn(node, val):
+            if val > node.val:
+                if node.right: fn(node.right, val)
+                else: node.right = TreeNode(val)
+            else:
+                if node.left: fn(node.left, val)
+                else: node.left = TreeNode(val)
+        fn(self.root, val)
+
 
     @classmethod
     def from_list_bfs(cls, l: List[T]) -> "Tree[T]":
@@ -246,6 +261,15 @@ class Test(unittest.TestCase):
 
         tree_vals = [0, None, -1]
         tree = Tree.from_list_bfs(tree_vals)
+        print(tree.root)
+
+    def test_insert_bst(self):
+        tree_vals = [3, 1, 4, 2, 5]
+        tree = Tree()
+        tree.root = TreeNode(tree_vals[0])
+
+        for val in tree_vals[1:]:
+            tree.insert_bst(val)
         print(tree.root)
 
 
