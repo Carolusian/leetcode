@@ -129,6 +129,13 @@ class Tree(Generic[T]):
                 else: node.left = TreeNode(val)
         fn(self.root, val)
 
+    @classmethod
+    def create_bst(cls, l):
+        tree = cls()
+        tree.root = TreeNode(l[0])
+        for val in l[1:]:
+            tree.insert_bst(val)
+        return tree
 
     @classmethod
     def from_list_bfs(cls, l: List[T]) -> "Tree[T]":
@@ -271,6 +278,9 @@ class Test(unittest.TestCase):
         for val in tree_vals[1:]:
             tree.insert_bst(val)
         print(tree.root)
+
+        tree2 = Tree.create_bst(tree_vals)
+        print(tree2.root)
 
 
 if __name__ == "__main__":
