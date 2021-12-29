@@ -28,3 +28,16 @@ The people whose naming style I like:
 - `idontknoooo`
 - `ye15`
 - `alviniac`
+
+## Tips
+
+- `bisect`, `deque`, `Counter`, `defaultdict`, `heapq`
+- Counter can be used to record number of operations, rather than really perform the operation, e.g. remove an element from container
+- Dict can be used to record status, e.g. true|false; pending|inprogress|done
+- Trust and focus in divide and conquer
+- 类代码模似: something between code and paper-pen walk through
+
+## References:
+
+- [一些刷题常用的 python 技巧](https://zhuanlan.zhihu.com/p/78543243)
+- [Shortest-LeetCode-Python-Solutions](https://github.com/cy69855522/Shortest-LeetCode-Python-Solutions)
