@@ -1,6 +1,6 @@
 # leetcode
 
-## common naming choices
+## Common naming choices
 
 A list of common variable names, help reduce time for naming
 
@@ -32,6 +32,7 @@ The people whose naming style I like:
 ## Tips
 
 - `bisect`, `deque`, `Counter`, `defaultdict`, `heapq`
+- Use `Anki` to help memorize
 - Counter can be used to record number of operations, rather than really perform the operation, e.g. remove an element from container
 - Dict can be used to record status, e.g. true|false; pending|inprogress|done
 - Trust and focus in divide and conquer
