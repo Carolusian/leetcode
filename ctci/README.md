@@ -61,6 +61,7 @@ Stack: useful in recursive algorithms
   - method 1: DFS + stack, stack is for cache and reverse the return, 3 status to detect circular
   - method 2: queueu, kahn's algorithm
 - Weaving: path, traversal represented in two arrays, together with recursion
+- Backtracking: tips, can use level argument to trace depth of recursion to help debugging
 
 ### Ch 6: Math and Puzzles: NOT THAT Necessary
 
@@ -68,4 +69,3 @@ Stack: useful in recursive algorithms
 
 - https://leetcode.com/discuss/general-discussion/1152824/cracking-the-coding-interview-6th-edition-in-leetcode
 - good dp question: https://leetcode.com/problems/network-delay-time/discuss/1614297/python-3-different-4-methods-no-explanation
-
