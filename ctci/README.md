@@ -56,7 +56,7 @@ Stack: useful in recursive algorithms
 - BFS:
   - typical scenario: find the minimum steps to transform from one state to another
   - example: https://leetcode.com/contest/weekly-contest-265/problems/minimum-operations-to-convert-number/
-- DFS: implemented in recursion
+- DFS: implemented in recursion, paths with sums is a typical question here
 - Topogical sort:
   - method 1: DFS + stack, stack is for cache and reverse the return, 3 status to detect circular
   - method 2: queueu, kahn's algorithm
