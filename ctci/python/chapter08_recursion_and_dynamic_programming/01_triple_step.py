@@ -18,24 +18,26 @@ from unittest.case import TestCase
 
 class Solution:
     def __init__(self):
-        self.dp = { 0: 0, 1: 1, 2: 1}
+        self.dp = {0: 0, 1: 1, 2: 1}
 
     def tribonacci(self, n: int) -> int:
         """Traditional recursion + dp"""
-        if n < 3: return self.dp[n]
-        
+        if n < 3:
+            return self.dp[n]
+
         if n in self.dp:
             return self.dp[n]
-        
+
         self.dp[n] = (
-            self.tribonacci(n-3) + self.tribonacci(n-2) + self.tribonacci(n-1)
+            self.tribonacci(n - 3) + self.tribonacci(n - 2) + self.tribonacci(n - 1)
         )
         return self.dp[n]
 
+
 class QueueSolution:
-    def tribonacci(self, n: int) -> int: 
+    def tribonacci(self, n: int) -> int:
         """Use a queue to keep tracking of previous results"""
-        last_three = collections.deque([0, 1, 1]) 
+        last_three = collections.deque([0, 1, 1])
         if n < 3:
             return last_three[n]
 
@@ -50,16 +52,15 @@ test_cases = (
     (10, 149),
 )
 
-class Test(unittest.TestCase):
 
+class Test(unittest.TestCase):
     def test_solutions(self):
-        for solution_cls in [Solution]:
+        for solution_cls in [Solution, QueueSolution]:
             for tc in test_cases:
                 n, expect = tc
-                sol = solution_cls() 
+                sol = solution_cls()
                 self.assertEqual(sol.tribonacci(n), expect)
 
 
 if __name__ == "__main__":
     unittest.main()
-
