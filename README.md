@@ -42,3 +42,5 @@ The people whose naming style I like:
 
 - [一些刷题常用的 python 技巧](https://zhuanlan.zhihu.com/p/78543243)
 - [Shortest-LeetCode-Python-Solutions](https://github.com/cy69855522/Shortest-LeetCode-Python-Solutions)
+- [Lucifer Blog](https://leetcode-solution-leetcode-pp.gitbook.io/leetcode-solution)
+- [如何通俗的解释排列公式和组合公式的含义？](https://www.zhihu.com/question/26094736/answer/610713978)

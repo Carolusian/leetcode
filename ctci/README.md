@@ -65,6 +65,10 @@ Stack: useful in recursive algorithms
 
 ### Ch 6: Math and Puzzles: NOT THAT Necessary
 
+### Ch 8: Recursion and Dynamic Programming
+
+- Backtracking (idea of Trial and Error), e.g. power set
+
 ## Related leetcode questions
 
 - https://leetcode.com/discuss/general-discussion/1152824/cracking-the-coding-interview-6th-edition-in-leetcode
